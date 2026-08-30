@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { type Ledger, seedLedger } from './model'
 
-const KEY = 'hisaab.ledger.v1'
+const KEY = 'aslikamai.ledger.v1'
 
 const load = (): Ledger => {
   try {

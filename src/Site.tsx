@@ -5,7 +5,7 @@ export default function Site() {
   return (
     <div className="site">
       <header className="nav">
-        <a className="brand" href="/">Hisaab</a>
+        <a className="brand" href="/">Asli Kamai</a>
         <nav>
           <a href="#how">How it works</a>
           <a href="#learn">What you learn</a>
@@ -18,7 +18,7 @@ export default function Site() {
           <p className="eyebrow">For Swiggy, Zomato, Rapido, Porter and Uber riders</p>
           <h1>You earned ₹1,200 today. How much did you actually keep?</h1>
           <p className="lead">
-            Hisaab logs each shift, takes out petrol, bike EMI and recharge, and shows the number that is really
+            Asli Kamai logs each shift, takes out petrol, bike EMI and recharge, and shows the number that is really
             yours — then explains, in plain words, where the rest went.
           </p>
           <div className="cta">
@@ -28,9 +28,9 @@ export default function Site() {
           <p className="muted">Free. No sign-up. Your numbers stay on your phone.</p>
         </div>
 
-        <div className="phone" aria-label="Preview of the Hisaab app">
+        <div className="phone" aria-label="Preview of the Asli Kamai app">
           <div className="phone-top">
-            <span className="brand">Hisaab</span>
+            <span className="brand">Asli Kamai</span>
             <span className="range">22 – 28 Aug</span>
           </div>
           <div className="eyebrow">Kept this week</div>
@@ -63,7 +63,7 @@ export default function Site() {
           </li>
           <li>
             <b>Set your monthly costs once</b>
-            <p>Bike EMI, recharge, upkeep. Hisaab spreads them across your working days so every shift carries its share.</p>
+            <p>Bike EMI, recharge, upkeep. Asli Kamai spreads them across your working days so every shift carries its share.</p>
           </li>
           <li>
             <b>See what you kept</b>
@@ -82,7 +82,7 @@ export default function Site() {
           </div>
           <div className="card">
             <h3>Why evenings pay more</h3>
-            <p>When your 6–9pm shifts earn 35% more per hour, Hisaab names it: surge pricing, and how to use it.</p>
+            <p>When your 6–9pm shifts earn 35% more per hour, Asli Kamai names it: surge pricing, and how to use it.</p>
           </div>
           <div className="card">
             <h3>Per-day cost of a loan</h3>
@@ -96,7 +96,7 @@ export default function Site() {
       </section>
 
       <section className="section band">
-        <h2>What Hisaab does not do</h2>
+        <h2>What Asli Kamai does not do</h2>
         <p className="lead">
           It does not read your platform account or guess how the app pays you. Everything comes from what you type in —
           your own ground-truth record, saved on your phone only.
@@ -107,13 +107,13 @@ export default function Site() {
         <h2>Start with this week</h2>
         <p className="lead">Add tonight's shift and the number is already there.</p>
         <div className="cta">
-          <a className="btn" href={APP_URL}>Open Hisaab</a>
+          <a className="btn" href={APP_URL}>Open Asli Kamai</a>
           <a className="btn ghost" href={APK_URL}>Android APK — coming soon</a>
         </div>
       </section>
 
       <footer className="foot">
-        Hisaab · built for riders in India · <a href="https://github.com/MONSTER13LIAR/gig-worker-app">source</a>
+        Asli Kamai · built for riders in India · <a href="https://github.com/MONSTER13LIAR/asli-kamai">source</a>
       </footer>
     </div>
   )

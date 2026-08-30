@@ -49,7 +49,7 @@ export default function App() {
     <main className="app">
       <header className="top">
         <div className="brand">
-          Hisaab <small>your real take-home</small>
+          Asli Kamai <small>your real take-home</small>
         </div>
         <div className="range">{range}</div>
       </header>
