@@ -9,9 +9,9 @@
   display: flex;
   align-items: center;
   justify-content: space-between;
-  padding: 22px 0;
+  padding: 26px 0 22px;
 }
-.nav .brand { text-decoration: none; color: var(--ink); font-size: 44px; letter-spacing: -0.035em; line-height: 1; }
+.nav .brand { text-decoration: none; color: var(--ink); font-size: 60px; letter-spacing: -0.04em; line-height: 1; position: relative; top: 5px; }
 .nav nav { display: flex; align-items: center; gap: 22px; font-size: 14px; }
 .nav nav a { color: var(--ink-2); text-decoration: none; }
 .nav nav a:hover { color: var(--ink); }
@@ -188,6 +188,6 @@
   .steps { grid-template-columns: 1fr; gap: 22px; }
   .grid { grid-template-columns: 1fr; }
   .nav nav a:not(.btn) { display: none; }
-  .nav .brand { font-size: 34px; }
+  .nav .brand { font-size: 40px; top: 3px; }
   .band { padding: 24px; }
 }
