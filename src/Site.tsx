@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 
 const APP_URL = '/app/'
 const APK_URL = '#download' // replace with the APK link when it exists
@@ -115,23 +115,7 @@ export default function Site() {
         </div>
       </section>
 
-      <section id="how" className="section">
-        <h2>How it works</h2>
-        <ol className="steps">
-          <li>
-            <b>Log a shift</b>
-            <p>App, hours, what you earned, petrol you put in. Ten seconds after you park.</p>
-          </li>
-          <li>
-            <b>Set your monthly costs once</b>
-            <p>Bike EMI, recharge, upkeep. Asli Kamai spreads them across your working days so every shift carries its share.</p>
-          </li>
-          <li>
-            <b>See what you kept</b>
-            <p>One number for the week, a bar for where the rest went, and a short explanation written from your data.</p>
-          </li>
-        </ol>
-      </section>
+      <HowItWorks />
 
       <section id="learn" className="section">
         <h2>What you learn along the way</h2>
@@ -177,5 +161,119 @@ export default function Site() {
         Asli Kamai · built for riders in India · <a href="https://github.com/MONSTER13LIAR/Asli-Kamai">source</a>
       </footer>
     </div>
+  )
+}
+
+const STEPS = [
+  {
+    title: 'Log a shift',
+    body: 'App, hours, what you earned, petrol you put in. Ten seconds after you park.',
+  },
+  {
+    title: 'Set your monthly costs once',
+    body: 'Bike EMI, recharge, upkeep. Asli Kamai spreads them across your working days so every shift carries its share.',
+  },
+  {
+    title: 'See what you kept',
+    body: 'One number for the week, a bar for where the rest went, and a short explanation written from your data.',
+  },
+]
+
+// Scroll-driven steps: the section is a tall track, the stage inside it is
+// pinned, and the active step (text + app card) swaps in place as the
+// reader moves through the track. One step visible at a time.
+function HowItWorks() {
+  const track = useRef<HTMLElement>(null)
+  const [active, setActive] = useState(0)
+
+  useEffect(() => {
+    let raf = 0
+    const update = () => {
+      raf = 0
+      const el = track.current
+      if (!el) return
+      const rect = el.getBoundingClientRect()
+      const travel = el.offsetHeight - window.innerHeight
+      const progress = travel > 0 ? Math.min(1, Math.max(0, -rect.top / travel)) : 0
+      setActive(Math.min(STEPS.length - 1, Math.floor(progress * STEPS.length)))
+    }
+    const onScroll = () => {
+      if (!raf) raf = requestAnimationFrame(update)
+    }
+    update()
+    window.addEventListener('scroll', onScroll, { passive: true })
+    window.addEventListener('resize', onScroll)
+    return () => {
+      window.removeEventListener('scroll', onScroll)
+      window.removeEventListener('resize', onScroll)
+      if (raf) cancelAnimationFrame(raf)
+    }
+  }, [])
+
+  const state = (i: number) => (i === active ? 'is-active' : i < active ? 'is-past' : 'is-next')
+
+  return (
+    <section id="how" className="how" ref={track}>
+      <div className="how-stage">
+        <div className="how-copy">
+          <h2>How it works</h2>
+          <div className="how-steps">
+            {STEPS.map((s, i) => (
+              <div className={'how-step ' + state(i)} key={s.title} aria-hidden={i !== active}>
+                <span className="how-num">{i + 1}</span>
+                <b>{s.title}</b>
+                <p>{s.body}</p>
+              </div>
+            ))}
+          </div>
+          <div className="how-dots" aria-hidden="true">
+            {STEPS.map((_, i) => <i key={i} className={i === active ? 'on' : ''} />)}
+          </div>
+        </div>
+
+        <div className="how-cards">
+          <div className={'how-card card ' + state(0)} aria-hidden={active !== 0}>
+            <h3>Add a shift</h3>
+            <div className="form">
+              <div className="field"><label>App</label><div className="fake">Swiggy</div></div>
+              <div className="field"><label>When</label><div className="fake">Evening</div></div>
+              <div className="field"><label>Earned</label><div className="fake">₹ 1,240</div></div>
+              <div className="field"><label>Petrol</label><div className="fake">₹ 100</div></div>
+              <div className="field full"><label>Hours</label><div className="fake">4</div></div>
+              <div className="actions full"><span className="btn ghost">Cancel</span><span className="btn">Save shift</span></div>
+            </div>
+          </div>
+
+          <div className={'how-card card ' + state(1)} aria-hidden={active !== 1}>
+            <h3>Monthly costs</h3>
+            <div className="costs">
+              <div className="cost"><span>Bike EMI</span><b>₹3,000</b></div>
+              <div className="cost"><span>Recharge</span><b>₹299</b></div>
+              <div className="cost"><span>Upkeep</span><b>₹500</b></div>
+            </div>
+            <div className="costs-foot">
+              <span>Over 25 working days that is <b>₹152</b> a day</span>
+              <span className="btn ghost small">Edit</span>
+            </div>
+          </div>
+
+          <div className={'how-card card ' + state(2)} aria-hidden={active !== 2}>
+            <div className="eyebrow">Kept this week</div>
+            <div className="kept"><span className="rupee">₹</span>5,140</div>
+            <p className="sub">of <b>₹7,650</b> earned · <span className="gone">33% gone</span> before you saw it</p>
+            <div className="bar">
+              <span className="fuel" style={{ width: '17%' }} />
+              <span className="emi" style={{ width: '11%' }} />
+              <span className="recharge" style={{ width: '5%' }} />
+              <span className="kept" style={{ width: '67%' }} />
+            </div>
+            <div className="explain-mini">
+              <span className="tag">From your own numbers</span>
+              <p>₹1,300 went to petrol and ₹1,210 was your share of EMI and recharge. What you kept is ₹5,140.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
   )
 }
