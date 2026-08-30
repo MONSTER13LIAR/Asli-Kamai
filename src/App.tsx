@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react'
 import { type MonthlyCosts, type Platform, type Shift, type Slot, PLATFORMS, SLOTS, inr, perDayFixed, uid } from './model'
 import { explain, netForShift, summarize } from './insights'
 import { useLedger } from './store'
+import { useExplanation } from './ai'
 
 const today = () => new Date().toISOString().slice(0, 10)
 
@@ -17,6 +18,7 @@ export default function App() {
 
   const week = useMemo(() => summarize(ledger), [ledger])
   const lines = useMemo(() => explain(ledger), [ledger])
+  const ai = useExplanation(ledger)
 
   const shifts = [...ledger.shifts].sort((a, b) => (a.date < b.date ? 1 : a.date > b.date ? -1 : 0))
   const first = shifts[shifts.length - 1]?.date
@@ -83,11 +85,23 @@ export default function App() {
         <button className="btn" onClick={() => setAdding(true)}>Add a shift</button>
       )}
 
-      <section className="card explain" aria-label="Explanation">
-        <span className="tag">From your own numbers</span>
-        {lines.map((l, i) => (
-          <p key={i}>{l}</p>
-        ))}
+      <section className="card explain" aria-label="Explanation" aria-busy={ai.status === 'loading'}>
+        {ai.status === 'ready' ? (
+          <>
+            <span className="tag">From your own numbers · {ai.data.concept || 'this week'}</span>
+            <p>{ai.data.explanation}</p>
+            <p>{ai.data.lesson}</p>
+          </>
+        ) : (
+          <>
+            <span className="tag">From your own numbers</span>
+            {lines.map((l, i) => (
+              <p key={i}>{l}</p>
+            ))}
+            {ai.status === 'loading' && <p className="muted">Writing your lesson…</p>}
+            {ai.status === 'error' && <p className="muted">Coach is offline right now; the numbers above are still yours.</p>}
+          </>
+        )}
       </section>
 
       <section className="card" aria-label="Shifts">
