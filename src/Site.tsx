@@ -1,7 +1,44 @@
+import { useEffect, useState } from 'react'
+
 const APP_URL = '/app/'
 const APK_URL = '#download' // replace with the APK link when it exists
 
+type Theme = 'light' | 'dark'
+const THEME_KEY = 'aslikamai.theme'
+
+const readTheme = (): Theme => {
+  try {
+    const t = localStorage.getItem(THEME_KEY)
+    if (t === 'light' || t === 'dark') return t
+  } catch {
+    /* default below */
+  }
+  return window.matchMedia?.('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
+
+function useTheme() {
+  const [theme, setTheme] = useState<Theme>(readTheme)
+  useEffect(() => {
+    document.documentElement.dataset.theme = theme
+    try {
+      localStorage.setItem(THEME_KEY, theme)
+    } catch {
+      /* fine */
+    }
+  }, [theme])
+  return { theme, toggle: () => setTheme(theme === 'dark' ? 'light' : 'dark') }
+}
+
+// Particle positions around the phone card, in % of the card box.
+const PARTICLES = [
+  { x: -6, y: 12, s: 6, d: 0 }, { x: 104, y: 20, s: 5, d: 1.2 }, { x: -10, y: 48, s: 4, d: 2.1 },
+  { x: 108, y: 55, s: 7, d: 0.6 }, { x: -4, y: 82, s: 5, d: 1.7 }, { x: 102, y: 88, s: 4, d: 2.6 },
+  { x: 20, y: -6, s: 5, d: 0.9 }, { x: 70, y: -8, s: 4, d: 2.3 }, { x: 40, y: 104, s: 6, d: 1.4 },
+  { x: 85, y: 106, s: 4, d: 0.3 }, { x: -12, y: 30, s: 3, d: 2.9 }, { x: 112, y: 38, s: 3, d: 1.9 },
+]
+
 export default function Site() {
+  const { theme, toggle } = useTheme()
   return (
     <div className="site">
       <header className="nav">
@@ -10,6 +47,16 @@ export default function Site() {
           <a href="#how">How it works</a>
           <a href="#learn">What you learn</a>
           <a className="btn small" href={APP_URL}>Open the app</a>
+          <button
+            type="button"
+            className="switch"
+            role="switch"
+            aria-checked={theme === 'dark'}
+            aria-label="Dark mode"
+            onClick={toggle}
+          >
+            <span className="knob" />
+          </button>
         </nav>
       </header>
 
@@ -28,6 +75,12 @@ export default function Site() {
           <p className="muted">Free. No sign-up. Your numbers stay on your phone.</p>
         </div>
 
+        <div className="float">
+          <div className="particles" aria-hidden="true">
+            {PARTICLES.map((p, i) => (
+              <i key={i} style={{ left: p.x + '%', top: p.y + '%', width: p.s, height: p.s, animationDelay: p.d + 's' }} />
+            ))}
+          </div>
         <div className="phone" aria-label="Preview of the Asli Kamai app">
           <div className="phone-top">
             <span className="brand">Asli Kamai</span>
@@ -51,6 +104,7 @@ export default function Site() {
             <span className="tag">From your own numbers</span>
             <p>Evenings paid ₹210 an hour, mornings ₹140. That gap is demand pricing — more orders, fewer riders.</p>
           </div>
+        </div>
         </div>
       </section>
 

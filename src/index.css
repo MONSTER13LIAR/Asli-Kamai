@@ -17,9 +17,25 @@
   --radius: 14px;
 }
 
+[data-theme='dark'] {
+  --paper: #121417;
+  --card: #1b1e23;
+  --ink: #eceef0;
+  --ink-2: #9aa0a8;
+  --line: #2b3038;
+  --kept: #5cc98a;
+  --kept-soft: #1d3527;
+  --gone: #e07a4f;
+  --fuel: #d9a23f;
+  --emi: #9d92c4;
+  --recharge: #6fa2cc;
+  --focus: #5cc98a;
+  color-scheme: dark;
+}
+
 * { box-sizing: border-box; }
 
-html, body { margin: 0; background: var(--paper); color: var(--ink); }
+html, body { margin: 0; background: var(--paper); color: var(--ink); transition: background 200ms ease, color 200ms ease; }
 
 body {
   font-family: var(--body);
@@ -167,7 +183,7 @@ button, input, select {
   font-size: 15px;
   cursor: pointer;
   background: var(--ink);
-  color: #fff;
+  color: var(--paper);
   width: 100%;
   transition: transform 120ms ease, background 120ms ease;
 }
@@ -226,7 +242,7 @@ button, input, select {
   font-size: 15px;
   width: 100%;
 }
-.field input:focus { border-color: var(--ink); background: #fff; }
+.field input:focus { border-color: var(--ink); background: var(--card); }
 .field .unit {
   position: relative;
 }
