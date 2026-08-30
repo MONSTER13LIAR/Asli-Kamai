@@ -250,6 +250,7 @@ function HowItWorks() {
               <div className="cost"><span>Bike EMI</span><b>₹3,000</b></div>
               <div className="cost"><span>Recharge</span><b>₹299</b></div>
               <div className="cost"><span>Upkeep</span><b>₹500</b></div>
+              <div className="cost"><span>Working days</span><b>25</b></div>
             </div>
             <div className="costs-foot">
               <span>Over 25 working days that is <b>₹152</b> a day</span>
@@ -266,6 +267,11 @@ function HowItWorks() {
               <span className="emi" style={{ width: '11%' }} />
               <span className="recharge" style={{ width: '5%' }} />
               <span className="kept" style={{ width: '67%' }} />
+            </div>
+            <div className="legend">
+              <span><i style={{ background: 'var(--fuel)' }} />Petrol<span className="v">₹1,300</span></span>
+              <span><i style={{ background: 'var(--emi)' }} />EMI<span className="v">₹840</span></span>
+              <span><i style={{ background: 'var(--recharge)' }} />Recharge<span className="v">₹370</span></span>
             </div>
             <div className="explain-mini">
               <span className="tag">From your own numbers</span>
