@@ -42,6 +42,18 @@
 .lead { font-size: 17px; line-height: 1.55; color: var(--ink-2); margin: 0; max-width: 52ch; }
 .cta { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 6px; }
 
+/* android button: grows on hover to reveal the download arrow */
+.btn.android { display: inline-flex; align-items: center; gap: 0; transition: gap 260ms ease, border-color 200ms ease, background 200ms ease; }
+.btn.android svg {
+  width: 0;
+  height: 20px;
+  opacity: 0;
+  transform: translateY(-4px);
+  transition: width 260ms ease, opacity 200ms ease 60ms, transform 260ms ease;
+}
+.btn.android:hover, .btn.android:focus-visible { gap: 10px; border-color: var(--kept); color: var(--kept); }
+.btn.android:hover svg, .btn.android:focus-visible svg { width: 20px; opacity: 1; transform: translateY(0); }
+
 /* apple-style theme switch */
 .switch {
   appearance: none;
@@ -325,12 +337,13 @@
   align-items: center;
   justify-content: space-between;
   gap: 24px;
-  padding: 28px 0 0;
+  padding: 40px 0 8px;
   border-top: 1px solid var(--line);
-  font-size: 14px;
+  font-size: 17px;
 }
-.site-foot .brand { font-size: 22px; }
-.site-foot nav { display: flex; gap: 22px; }
+.site-foot .brand { font-size: 30px; }
+.site-foot .muted { font-size: 16px; }
+.site-foot nav { display: flex; gap: 28px; }
 .site-foot nav a { color: var(--ink-2); text-decoration: none; }
 .site-foot nav a:hover { color: var(--ink); }
 

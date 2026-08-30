@@ -3,6 +3,18 @@ import { useEffect, useRef, useState } from 'react'
 const APP_URL = '/app/'
 const APK_URL = '#download' // replace with the APK link when it exists
 
+// Expands on hover to reveal a download arrow.
+function AndroidButton({ children }: { children: string }) {
+  return (
+    <a className="btn ghost android" href={APK_URL}>
+      <span>{children}</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round" aria-hidden="true">
+        <path d="M12 4v11M7 10l5 5 5-5M5 20h14" />
+      </svg>
+    </a>
+  )
+}
+
 type Theme = 'light' | 'dark'
 const THEME_KEY = 'aslikamai.theme'
 
@@ -77,7 +89,7 @@ export default function Site() {
           </p>
           <div className="cta">
             <a className="btn" href={APP_URL}>Try it in your browser</a>
-            <a className="btn ghost" href={APK_URL}>Download for Android</a>
+            <AndroidButton>Download for Android</AndroidButton>
           </div>
           <p className="muted">Free. No sign-up. Your numbers stay on your phone.</p>
         </div>
@@ -166,7 +178,7 @@ export default function Site() {
           <p className="lead">Add tonight's shift and the number is already there.</p>
           <div className="cta">
             <a className="btn" href={APP_URL}>Open Asli Kamai</a>
-            <a className="btn ghost" href={APK_URL}>Android APK — coming soon</a>
+            <AndroidButton>Android APK — coming soon</AndroidButton>
           </div>
         </div>
         <img className="final-art" src="/mascot-riding.webp" alt="The Asli Kamai rider on a yellow scooter" width="452" height="492" loading="lazy" />
