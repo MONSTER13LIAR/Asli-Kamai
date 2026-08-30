@@ -169,7 +169,7 @@ export default function Site() {
             <a className="btn ghost" href={APK_URL}>Android APK — coming soon</a>
           </div>
         </div>
-        <img className="final-art" src="/rider-riding.webp" alt="The Asli Kamai rider on a yellow scooter" width="452" height="492" loading="lazy" />
+        <img className="final-art" src="/mascot-riding.webp" alt="The Asli Kamai rider on a yellow scooter" width="452" height="492" loading="lazy" />
       </section>
 
       <footer className="site-foot">
