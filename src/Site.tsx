@@ -117,48 +117,70 @@ export default function Site() {
 
       <HowItWorks />
 
-      <section id="learn" className="section">
-        <h2>What you learn along the way</h2>
-        <p className="lead">Not a course. Each idea shows up only when your own numbers make it real.</p>
-        <div className="grid">
-          <div className="card">
-            <h3>Gross vs. take-home</h3>
+      <section id="learn" className="learn">
+        <div className="learn-head">
+          <h2>What you learn along the way</h2>
+          <p className="lead">Not a course. Each idea shows up only when your own numbers make it real.</p>
+        </div>
+        <div className="learn-grid">
+          <div className="card lesson">
+            <span className="tag">Gross vs. net</span>
+            <h3>The number on the app is not your number</h3>
             <p>The app shows ₹1,200. After petrol and your EMI share it is ₹930. That 22% is the difference between the two words.</p>
           </div>
-          <div className="card">
+          <div className="card lesson">
+            <span className="tag">Surge pricing</span>
             <h3>Why evenings pay more</h3>
-            <p>When your 6–9pm shifts earn 35% more per hour, Asli Kamai names it: surge pricing, and how to use it.</p>
+            <p>When your 6–9pm shifts earn 35% more per hour, Asli Kamai names it: demand pricing, and how to use it.</p>
           </div>
-          <div className="card">
-            <h3>Per-day cost of a loan</h3>
+          <div className="card lesson">
+            <span className="tag">Fixed cost per day</span>
+            <h3>What a loan costs you every morning</h3>
             <p>₹3,000 EMI over 25 working days is ₹120 a day. A two-question quiz each week checks you can do it yourself.</p>
           </div>
-          <div className="card">
+          <div className="card lesson">
+            <span className="tag">Compounding</span>
             <h3>What ₹50 a day becomes</h3>
-            <p>Set a goal and see it grow — and what a recurring deposit adds on top. That is compounding, with your figures.</p>
+            <p>Set a goal and see it grow — and what a recurring deposit adds on top. Your figures, not a textbook's.</p>
           </div>
         </div>
       </section>
 
-      <section className="section band">
-        <h2>What Asli Kamai does not do</h2>
-        <p className="lead">
-          It does not read your platform account or guess how the app pays you. Everything comes from what you type in —
-          your own ground-truth record, saved on your phone only.
-        </p>
-      </section>
-
-      <section id="download" className="section final">
-        <h2>Start with this week</h2>
-        <p className="lead">Add tonight's shift and the number is already there.</p>
-        <div className="cta">
-          <a className="btn" href={APP_URL}>Open Asli Kamai</a>
-          <a className="btn ghost" href={APK_URL}>Android APK — coming soon</a>
+      <section className="promise">
+        <div className="promise-copy">
+          <h2>What Asli Kamai does not do</h2>
+          <p className="lead">
+            Everything comes from what you type in — your own ground-truth record, saved on your phone only.
+          </p>
         </div>
+        <ul className="promise-list">
+          <li><b>Does not read your platform account.</b> No login to Swiggy or Zomato, ever.</li>
+          <li><b>Does not guess how the app pays you.</b> Your record is the truth, not our estimate.</li>
+          <li><b>Does not send your numbers anywhere.</b> Only the week's totals go to the coach, never your name.</li>
+        </ul>
       </section>
 
-      <footer className="foot">
-        Asli Kamai · built for riders in India · <a href="https://github.com/MONSTER13LIAR/Asli-Kamai">source</a>
+      <section id="download" className="final">
+        <div className="final-copy">
+          <h2>Start with this week</h2>
+          <p className="lead">Add tonight's shift and the number is already there.</p>
+          <div className="cta">
+            <a className="btn" href={APP_URL}>Open Asli Kamai</a>
+            <a className="btn ghost" href={APK_URL}>Android APK — coming soon</a>
+          </div>
+        </div>
+        <img className="final-art" src="/rider-riding.webp" alt="The Asli Kamai rider on a yellow scooter" width="452" height="492" loading="lazy" />
+      </section>
+
+      <footer className="site-foot">
+        <span className="brand">Asli Kamai</span>
+        <nav>
+          <a href="#how">How it works</a>
+          <a href="#learn">What you learn</a>
+          <a href={APP_URL}>Open the app</a>
+          <a href="https://github.com/MONSTER13LIAR/Asli-Kamai">Source</a>
+        </nav>
+        <span className="muted">Built for riders in India.</span>
       </footer>
     </div>
   )

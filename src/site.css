@@ -1,5 +1,6 @@
 /* Landing page. Shares tokens and the hero/bar/card styles with the app. */
 .site {
+  overflow-x: clip;
   max-width: 1040px;
   margin: 0 auto;
   padding: 0 24px 64px;
@@ -125,16 +126,6 @@
 .phone .card { background: var(--paper); margin-top: 8px; }
 .phone .explain p { font-size: 15px; }
 
-.section { padding: 48px 0; border-top: 1px solid var(--line); }
-.section h2 {
-  margin: 0 0 12px;
-  font-family: var(--display);
-  font-weight: 700;
-  font-size: 30px;
-  letter-spacing: -0.02em;
-}
-.section .lead { margin-bottom: 24px; }
-
 /* how it works: tall scroll track with a pinned stage */
 .how {
   height: 340vh;
@@ -250,28 +241,102 @@
   margin-bottom: 8px;
 }
 
-.grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px; }
-.grid .card h3 {
-  margin: 0 0 8px;
+/* what you learn */
+.learn { padding: 120px 0 100px; border-top: 1px solid var(--line); }
+.learn-head { max-width: 720px; margin-bottom: 48px; }
+.learn h2, .promise h2, .final h2 {
+  margin: 0 0 16px;
   font-family: var(--display);
   font-weight: 700;
-  font-size: 18px;
-  letter-spacing: -0.01em;
+  font-size: 54px;
+  line-height: 1.02;
+  letter-spacing: -0.03em;
 }
-.grid .card p { color: var(--ink-2); }
+.learn .lead, .promise .lead, .final .lead { font-size: 22px; margin: 0; }
+.learn-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; }
+.lesson { padding: 32px; }
+.lesson .tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  color: var(--kept);
+  background: var(--kept-soft);
+  border-radius: 6px;
+  padding: 4px 8px;
+  margin-bottom: 18px;
+}
+.lesson h3 {
+  margin: 0 0 10px;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1.1;
+  letter-spacing: -0.02em;
+}
+.lesson p { margin: 0; color: var(--ink-2); font-size: 17px; line-height: 1.55; }
 
-.band { background: var(--card); border: 1px solid var(--line); border-radius: var(--radius); padding: 36px; margin-top: 24px; }
-.band .lead { margin-bottom: 0; }
+/* what it does not do */
+.promise {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 64px;
+  align-items: center;
+  padding: 64px;
+  background: var(--ink);
+  color: var(--paper);
+  border-radius: 24px;
+}
+.promise .lead { color: var(--paper); opacity: 0.7; }
+.promise-list { list-style: none; margin: 0; padding: 0; display: flex; flex-direction: column; }
+.promise-list li {
+  padding: 20px 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+  font-size: 17px;
+  line-height: 1.5;
+  opacity: 0.75;
+}
+.promise-list li:first-child { border-top: 0; padding-top: 0; }
+.promise-list li:last-child { padding-bottom: 0; }
+.promise-list b { display: block; font-size: 20px; opacity: 1; color: var(--paper); margin-bottom: 2px; }
+[data-theme='dark'] .promise { background: var(--card); border: 1px solid var(--line); }
 
-.final { text-align: center; }
-.final .lead { margin: 0 auto 20px; }
-.final .cta { justify-content: center; }
+/* closing call to action */
+.final {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 48px;
+  align-items: center;
+  padding: 120px 0 80px;
+}
+.final .cta { margin-top: 28px; }
+.final-art {
+  justify-self: center;
+  width: 100%;
+  max-width: 380px;
+  height: auto;
+  animation: levitate 5s ease-in-out infinite;
+}
 
-.site .foot { margin-top: 48px; }
-.site .foot a { color: inherit; }
+/* footer */
+.site-foot {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  padding: 28px 0 0;
+  border-top: 1px solid var(--line);
+  font-size: 14px;
+}
+.site-foot .brand { font-size: 22px; }
+.site-foot nav { display: flex; gap: 22px; }
+.site-foot nav a { color: var(--ink-2); text-decoration: none; }
+.site-foot nav a:hover { color: var(--ink); }
+
 
 @media (prefers-reduced-motion: reduce) {
-  .float .phone, .particles i { animation: none; }
+  .float .phone, .particles i, .final-art { animation: none; }
   .how-step, .how-card { transition: opacity 200ms ease; transform: none !important; }
   .particles i { opacity: 0.5; }
 }
@@ -289,8 +354,18 @@
   .how-cards { height: 300px; }
   .how-card { max-width: 100%; padding: 16px; }
   .how-card .kept { font-size: 44px; }
-  .grid { grid-template-columns: 1fr; }
+  .learn { padding: 72px 0 56px; }
+  .learn h2, .promise h2, .final h2 { font-size: 36px; }
+  .learn .lead, .promise .lead, .final .lead { font-size: 18px; }
+  .learn-grid { grid-template-columns: 1fr; }
+  .lesson { padding: 24px; }
+  .lesson h3 { font-size: 22px; }
+  .promise { grid-template-columns: 1fr; gap: 28px; padding: 32px 24px; }
+  .final { grid-template-columns: 1fr; padding: 72px 0 48px; text-align: center; }
+  .final .cta { justify-content: center; }
+  .final-art { max-width: 260px; }
+  .site-foot { flex-direction: column; align-items: flex-start; gap: 14px; }
+  .site-foot nav { flex-wrap: wrap; gap: 14px; }
   .nav nav a:not(.btn) { display: none; }
   .nav .brand { font-size: 40px; top: 3px; }
-  .band { padding: 24px; }
 }
