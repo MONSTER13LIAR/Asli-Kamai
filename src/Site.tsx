@@ -113,7 +113,7 @@ export default function Site() {
       </section>
 
       <footer className="foot">
-        Asli Kamai · built for riders in India · <a href="https://github.com/MONSTER13LIAR/asli-kamai">source</a>
+        Asli Kamai · built for riders in India · <a href="https://github.com/MONSTER13LIAR/Asli-Kamai">source</a>
       </footer>
     </div>
   )
