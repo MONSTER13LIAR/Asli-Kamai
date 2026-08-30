@@ -11,7 +11,7 @@
   justify-content: space-between;
   padding: 22px 0;
 }
-.nav .brand { text-decoration: none; color: var(--ink); font-size: 34px; letter-spacing: -0.03em; }
+.nav .brand { text-decoration: none; color: var(--ink); font-size: 44px; letter-spacing: -0.035em; line-height: 1; }
 .nav nav { display: flex; align-items: center; gap: 22px; font-size: 14px; }
 .nav nav a { color: var(--ink-2); text-decoration: none; }
 .nav nav a:hover { color: var(--ink); }
@@ -43,9 +43,9 @@
   appearance: none;
   border: 0;
   padding: 0;
-  width: 46px;
-  height: 28px;
-  border-radius: 14px;
+  width: 56px;
+  height: 30px;
+  border-radius: 15px;
   background: var(--line);
   position: relative;
   cursor: pointer;
@@ -56,14 +56,27 @@
   position: absolute;
   top: 2px;
   left: 2px;
-  width: 24px;
-  height: 24px;
+  width: 26px;
+  height: 26px;
   border-radius: 50%;
   background: #fff;
   box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3);
   transition: transform 220ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
-.switch[aria-checked='true'] .knob { transform: translateX(18px); }
+.switch[aria-checked='true'] .knob { transform: translateX(26px); }
+.switch svg {
+  position: absolute;
+  top: 50%;
+  width: 16px;
+  height: 16px;
+  transform: translateY(-50%);
+  transition: opacity 200ms ease;
+}
+.switch .sun { right: 7px; color: #d9a23f; }
+.switch .moon { left: 7px; color: #fff; }
+/* the knob covers one side; show the icon for the current mode on the free side */
+.switch[aria-checked='false'] .moon { opacity: 0; }
+.switch[aria-checked='true'] .sun { opacity: 0; }
 
 /* phone preview: floats, with particles drifting around it */
 .float {
@@ -175,6 +188,6 @@
   .steps { grid-template-columns: 1fr; gap: 22px; }
   .grid { grid-template-columns: 1fr; }
   .nav nav a:not(.btn) { display: none; }
-  .nav .brand { font-size: 28px; }
+  .nav .brand { font-size: 34px; }
   .band { padding: 24px; }
 }
