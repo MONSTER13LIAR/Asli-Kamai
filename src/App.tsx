@@ -3,6 +3,10 @@ import { type MonthlyCosts, type Platform, type Shift, type Slot, PLATFORMS, SLO
 import { explain, netForShift, summarize } from './insights'
 import { useLedger } from './store'
 import { useExplanation } from './ai'
+import { GoogleButton, useAuth } from './auth'
+
+// Riders get to use the app first; the account comes once there is something worth keeping.
+const SIGN_IN_AFTER = 10
 
 const today = () => new Date().toISOString().slice(0, 10)
 
@@ -12,7 +16,8 @@ const dayLabel = (iso: string) => {
 }
 
 export default function App() {
-  const { ledger, setLedger, loadSample, clear } = useLedger()
+  const { ledger, setLedger, loadSample, clear, sync } = useLedger()
+  const { user, ready, signOut } = useAuth()
   const [adding, setAdding] = useState(false)
   const [editingCosts, setEditingCosts] = useState(false)
 
@@ -53,8 +58,17 @@ export default function App() {
         <div className="brand">
           Asli Kamai <small>your real take-home</small>
         </div>
-        <div className="range">{range}</div>
+        <div className="top-right">
+          <span className="range">{range}</span>
+          {user && (
+            <button className="avatar" onClick={() => window.confirm('Sign out? Your shifts stay on this phone.') && signOut()} title={user.email}>
+              {user.picture ? <img src={user.picture} alt="" referrerPolicy="no-referrer" /> : user.name?.[0] ?? '·'}
+            </button>
+          )}
+        </div>
       </header>
+
+      {ready && !user && ledger.shifts.length >= SIGN_IN_AFTER && <SignInWall count={ledger.shifts.length} />}
 
       <section className="hero" aria-label="This week">
         <div className="eyebrow">Kept this week</div>
@@ -163,7 +177,7 @@ export default function App() {
       </section>
 
       <p className="foot">
-        Saved on this phone only.{' '}
+        {user ? (sync === 'synced' ? 'Saved on this phone and backed up. ' : sync === 'syncing' ? 'Backing up… ' : sync === 'offline' ? 'Saved on this phone; backup will retry. ' : '') : 'Saved on this phone only. '}
         {shifts.length ? (
           <button onClick={() => window.confirm('Remove every shift and cost from this phone?') && clear()}>Clear everything</button>
         ) : (
@@ -250,5 +264,24 @@ function CostsForm({ value, onSave, onCancel }: { value: MonthlyCosts; onSave: (
         <button type="submit" className="btn">Save costs</button>
       </div>
     </form>
+  )
+}
+
+function SignInWall({ count }: { count: number }) {
+  const [error, setError] = useState<string | null>(null)
+  return (
+    <div className="wall" role="dialog" aria-modal="true" aria-labelledby="wall-title">
+      <div className="wall-card">
+        <div className="eyebrow">{count} shifts on this phone</div>
+        <h2 id="wall-title">Keep your hisaab safe</h2>
+        <p>
+          You've logged {count} shifts. Sign in once so your record survives a lost phone, a reset, or a new one — and
+          opens on any device.
+        </p>
+        <GoogleButton onError={setError} />
+        {error && <p className="muted">{error}</p>}
+        <p className="muted">Only your Google name and email are stored. Nothing is shared with any platform.</p>
+      </div>
+    </div>
   )
 }

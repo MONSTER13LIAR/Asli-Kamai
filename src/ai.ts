@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react'
+import { api } from './api'
 import type { Ledger } from './model'
 
 export interface AiExplanation {
@@ -41,16 +42,8 @@ export function useExplanation(ledger: Ledger): State {
     }
     let live = true
     setState({ status: 'loading' })
-    fetch('/api/explain', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ ledger }),
-    })
-      .then(async (r) => {
-        const body = await r.json()
-        if (!r.ok) throw new Error(body.error ?? r.statusText)
-        return body as AiExplanation
-      })
+    api
+      .explain(ledger)
       .then((data) => {
         if (!live) return
         try {
