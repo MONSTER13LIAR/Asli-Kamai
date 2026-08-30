@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react'
-import { type Ledger, seedLedger } from './model'
+import { type Ledger, emptyLedger, seedLedger } from './model'
 
 const KEY = 'aslikamai.ledger.v1'
 
@@ -8,9 +8,9 @@ const load = (): Ledger => {
     const raw = localStorage.getItem(KEY)
     if (raw) return JSON.parse(raw) as Ledger
   } catch {
-    /* fall through to seed */
+    /* fall through to an empty ledger */
   }
-  return seedLedger()
+  return emptyLedger()
 }
 
 export function useLedger() {
@@ -22,6 +22,7 @@ export function useLedger() {
       /* storage unavailable; keep in memory */
     }
   }, [ledger])
-  const reset = () => setLedger(seedLedger())
-  return { ledger, setLedger, reset }
+  const loadSample = () => setLedger(seedLedger())
+  const clear = () => setLedger(emptyLedger())
+  return { ledger, setLedger, loadSample, clear }
 }

@@ -40,6 +40,12 @@ const day = (offset: number) => {
   return d.toISOString().slice(0, 10)
 }
 
+// First run: no shifts, typical monthly costs to edit.
+export const emptyLedger = (): Ledger => ({
+  monthly: { emi: 0, recharge: 0, maintenance: 0, workingDays: 25 },
+  shifts: [],
+})
+
 // One rider's week. Evenings visibly out-earn mornings: that pattern
 // is the first lesson the app will teach.
 export const seedLedger = (): Ledger => ({

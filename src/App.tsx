@@ -12,7 +12,7 @@ const dayLabel = (iso: string) => {
 }
 
 export default function App() {
-  const { ledger, setLedger, reset } = useLedger()
+  const { ledger, setLedger, loadSample, clear } = useLedger()
   const [adding, setAdding] = useState(false)
   const [editingCosts, setEditingCosts] = useState(false)
 
@@ -107,7 +107,10 @@ export default function App() {
       <section className="card" aria-label="Shifts">
         <h2>Shifts</h2>
         {shifts.length === 0 ? (
-          <p className="muted">No shifts yet. Add one and your week starts here.</p>
+          <p className="muted">
+            No shifts yet. Add one and your week starts here, or{' '}
+            <button className="link" onClick={loadSample}>load a sample week</button> to see how it looks.
+          </p>
         ) : (
           <div className="list">
             {shifts.map((s) => {
@@ -160,7 +163,12 @@ export default function App() {
       </section>
 
       <p className="foot">
-        Saved on this phone only. <button onClick={reset}>Load the sample week</button>
+        Saved on this phone only.{' '}
+        {shifts.length ? (
+          <button onClick={() => window.confirm('Remove every shift and cost from this phone?') && clear()}>Clear everything</button>
+        ) : (
+          <button onClick={loadSample}>Load the sample week</button>
+        )}
       </p>
     </main>
   )
