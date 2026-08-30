@@ -13,3 +13,4 @@ venv/
 .env
 .env.*
 .vercel/
+design/mascot/prompts.md
