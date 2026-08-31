@@ -20,14 +20,20 @@ export async function signInWithGoogle(credential) {
   return { token, user }
 }
 
-export function requireUser(req, res, next) {
-  const header = req.get('authorization') ?? ''
-  const token = header.startsWith('Bearer ') ? header.slice(7) : null
-  if (!token) return res.status(401).json({ error: 'sign in required' })
+// Returns the user id for a Bearer token, or null.
+export function uidFromHeader(header) {
+  const token = header?.startsWith('Bearer ') ? header.slice(7) : null
+  if (!token) return null
   try {
-    req.uid = jwt.verify(token, secret).uid
-    next()
+    return jwt.verify(token, secret).uid
   } catch {
-    res.status(401).json({ error: 'session expired' })
+    return null
   }
+}
+
+export function requireUser(req, res, next) {
+  const uid = uidFromHeader(req.get('authorization'))
+  if (!uid) return res.status(401).json({ error: 'sign in required' })
+  req.uid = uid
+  next()
 }

@@ -26,6 +26,9 @@ if (url) {
   const pool = new pg.Pool({
     connectionString: url,
     ssl: /localhost|127\.0\.0\.1/.test(url) ? false : { rejectUnauthorized: false },
+    // Serverless-friendly: one connection per warm instance, released fast.
+    max: 1,
+    idleTimeoutMillis: 10_000,
   })
   await pool.query(schema)
   db = {
