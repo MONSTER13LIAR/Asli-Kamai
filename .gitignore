@@ -15,3 +15,5 @@ venv/
 .vercel/
 design/mascot/prompts.md
 .insforge/
+.vercel
+.env*

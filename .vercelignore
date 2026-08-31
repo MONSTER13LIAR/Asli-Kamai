@@ -1,0 +1,6 @@
+.env
+.env.*
+server/.env
+dist
+node_modules
+design

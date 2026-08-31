@@ -38,10 +38,10 @@ async function call<T>(path: string, init: RequestInit = {}): Promise<T> {
 
 export const api = {
   signInWithGoogle: (credential: string) =>
-    call<{ token: string; user: User }>('/auth/google', { method: 'POST', body: JSON.stringify({ credential }) }),
-  me: () => call<{ user: User }>('/me'),
-  getLedger: () => call<{ ledger: Ledger | null; updatedAt: string | null }>('/ledger'),
-  putLedger: (ledger: Ledger) => call<{ updatedAt: string }>('/ledger', { method: 'PUT', body: JSON.stringify({ ledger }) }),
+    call<{ token: string; user: User }>('/api/auth/google', { method: 'POST', body: JSON.stringify({ credential }) }),
+  me: () => call<{ user: User }>('/api/me'),
+  getLedger: () => call<{ ledger: Ledger | null; updatedAt: string | null }>('/api/ledger'),
+  putLedger: (ledger: Ledger) => call<{ updatedAt: string }>('/api/ledger', { method: 'PUT', body: JSON.stringify({ ledger }) }),
   explain: (ledger: Ledger) =>
-    call<{ explanation: string; lesson: string; concept: string }>('/explain', { method: 'POST', body: JSON.stringify({ ledger }) }),
+    call<{ explanation: string; lesson: string; concept: string }>('/api/explain', { method: 'POST', body: JSON.stringify({ ledger }) }),
 }
