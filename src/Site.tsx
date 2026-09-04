@@ -1,33 +1,8 @@
 import { useEffect, useRef, useState } from 'react'
+import { useTheme } from './theme'
 
 const APP_URL = '/app/'
 const SAMPLE_URL = '/app/?sample=1'
-
-type Theme = 'light' | 'dark'
-const THEME_KEY = 'aslikamai.theme'
-
-const readTheme = (): Theme => {
-  try {
-    const t = localStorage.getItem(THEME_KEY)
-    if (t === 'light' || t === 'dark') return t
-  } catch {
-    /* default below */
-  }
-  return 'light'
-}
-
-function useTheme() {
-  const [theme, setTheme] = useState<Theme>(readTheme)
-  useEffect(() => {
-    document.documentElement.dataset.theme = theme
-    try {
-      localStorage.setItem(THEME_KEY, theme)
-    } catch {
-      /* fine */
-    }
-  }, [theme])
-  return { theme, toggle: () => setTheme(theme === 'dark' ? 'light' : 'dark') }
-}
 
 // Particle positions around the phone card, in % of the card box.
 const PARTICLES = [

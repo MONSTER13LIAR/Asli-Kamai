@@ -23,6 +23,7 @@ const load = (): Ledger => {
   } catch {
     /* fall through to an empty ledger */
   }
+  if (saved && !Array.isArray(saved.shifts)) saved = null
   if (wantsSample() && !saved?.shifts.length) return seedLedger()
   return saved ?? emptyLedger()
 }
@@ -48,6 +49,10 @@ export function useLedger() {
   const [sync, setSync] = useState<SyncState>('local')
   const pulled = useRef<number | null>(null) // user id we already reconciled with
 
+  // Always push the copy on screen, not the one captured when the timer was set.
+  const latest = useRef(ledger)
+  latest.current = ledger
+
   // Persist locally on every change.
   useEffect(() => {
     try {
@@ -71,12 +76,12 @@ export function useLedger() {
     api
       .getLedger()
       .then(async ({ ledger: remote, updatedAt }) => {
-        const localHasData = ledger.shifts.length > 0
+        const localHasData = latest.current.shifts.length > 0
         const remoteNewer = remote && updatedAt && (!localHasData || updatedAt > savedAt())
         if (remoteNewer) {
           setLedger(remote)
         } else if (localHasData) {
-          await api.putLedger(ledger)
+          await api.putLedger(latest.current)
         }
         setSync('synced')
       })
@@ -84,26 +89,38 @@ export function useLedger() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [user])
 
-  // Push changes while signed in (skip until the first reconcile finished).
-  const first = useRef(true)
+  // Push changes while signed in. `dirty` survives an in-flight sync, so an
+  // edit made while a push is running is still sent once that push lands
+  // instead of sitting on the phone until the next unrelated change.
+  const dirty = useRef(false)
+  const firstChange = useRef(true)
   useEffect(() => {
-    if (first.current) {
-      first.current = false
+    if (firstChange.current) {
+      firstChange.current = false
       return
     }
-    if (!user || sync === 'syncing') return
-    const t = setTimeout(() => {
-      setSync('syncing')
-      api
-        .putLedger(ledger)
-        .then(() => setSync('synced'))
-        .catch(() => setSync('offline'))
-    }, 800)
-    return () => clearTimeout(t)
-    // eslint-disable-next-line react-hooks/exhaustive-deps
+    dirty.current = true
   }, [ledger])
 
+  useEffect(() => {
+    if (!user || !dirty.current || sync === 'syncing') return
+    const t = setTimeout(() => {
+      dirty.current = false
+      setSync('syncing')
+      api
+        .putLedger(latest.current)
+        .then(() => setSync('synced'))
+        .catch(() => {
+          dirty.current = true // keep it queued for the next attempt
+          setSync('offline')
+        })
+    }, 800)
+    return () => clearTimeout(t)
+  }, [ledger, user, sync])
+
   const loadSample = () => setLedger(seedLedger())
+  const clearSample = () =>
+    setLedger((l) => ({ ...l, shifts: l.shifts.filter((s) => !s.sample) }))
   const clear = () => setLedger(emptyLedger())
-  return { ledger, setLedger, loadSample, clear, sync }
+  return { ledger, setLedger, loadSample, clearSample, clear, sync }
 }

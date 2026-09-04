@@ -42,20 +42,26 @@ export function useExplanation(ledger: Ledger): State {
     }
     let live = true
     setState({ status: 'loading' })
-    api
-      .explain(ledger)
-      .then((data) => {
-        if (!live) return
-        try {
-          sessionStorage.setItem(CACHE, JSON.stringify({ key, data }))
-        } catch {
-          /* fine */
-        }
-        setState({ status: 'ready', data })
-      })
-      .catch((e: Error) => live && setState({ status: 'error', message: e.message }))
+    // Riders often log two or three shifts in one sitting. Waiting for the
+    // edits to settle turns that burst into a single call instead of one
+    // slow, billable request per keystroke-sized change.
+    const timer = setTimeout(() => {
+      api
+        .explain(ledger)
+        .then((data) => {
+          if (!live) return
+          try {
+            sessionStorage.setItem(CACHE, JSON.stringify({ key, data }))
+          } catch {
+            /* fine */
+          }
+          setState({ status: 'ready', data })
+        })
+        .catch((e: Error) => live && setState({ status: 'error', message: e.message }))
+    }, 1200)
     return () => {
       live = false
+      clearTimeout(timer)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [key])

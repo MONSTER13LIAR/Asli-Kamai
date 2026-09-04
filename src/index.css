@@ -67,8 +67,9 @@ button, input, select {
 /* ---- header ---- */
 .top {
   display: flex;
-  align-items: baseline;
+  align-items: center;
   justify-content: space-between;
+  gap: 10px;
 }
 .brand {
   font-family: var(--display);
@@ -87,6 +88,13 @@ button, input, select {
 .range {
   font-size: 13px;
   color: var(--ink-2);
+  white-space: nowrap;
+}
+
+/* On a narrow phone the header has room for the name, the week and the
+   controls — but not the tagline as well. */
+@media (max-width: 420px) {
+  .brand small { display: none; }
 }
 
 /* ---- hero ---- */
@@ -102,7 +110,7 @@ button, input, select {
   text-transform: uppercase;
   color: var(--ink-2);
 }
-.kept {
+.hero > .kept, .phone > .kept, .how-card > .kept {
   font-family: var(--display);
   font-weight: 700;
   font-size: 64px;
@@ -111,6 +119,7 @@ button, input, select {
   color: var(--kept);
   font-variant-numeric: tabular-nums;
 }
+.hero > .kept.is-short { color: var(--gone); }
 .kept .rupee {
   font-size: 0.55em;
   vertical-align: 0.42em;
@@ -294,6 +303,25 @@ button, input, select {
 
 .link { border: 0; background: none; color: var(--kept); font-weight: 600; text-decoration: underline; cursor: pointer; padding: 0; font-size: inherit; }
 
+/* ---- add to home screen ---- */
+.install {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+  border-color: var(--kept);
+  background: var(--kept-soft);
+}
+.install b { font-weight: 600; }
+.install p { margin: 2px 0 0; }
+.install-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-shrink: 0;
+}
+
 .foot { text-align: center; font-size: 12px; color: var(--ink-2); }
 .foot button { border: 0; background: none; color: inherit; text-decoration: underline; cursor: pointer; padding: 0; }
 
@@ -350,3 +378,77 @@ button, input, select {
 .wall-card p { margin: 0; }
 .wall-card .muted { font-size: 12.5px; }
 @media (min-width: 600px) { .wall { align-items: center; } }
+
+
+/* ---- first run ---- */
+.start { display: flex; flex-direction: column; gap: 10px; }
+.start h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 34px;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+}
+.start p { margin: 0; color: var(--ink-2); font-size: 15px; }
+
+/* ---- sample week ---- */
+.sample-note {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 10px 14px;
+  border: 1px dashed var(--line);
+  border-radius: 12px;
+  font-size: 13px;
+  color: var(--ink-2);
+}
+.sample-note b { color: var(--ink); font-weight: 600; }
+.sample-note .link { white-space: nowrap; }
+
+/* ---- undo ---- */
+.undo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 11px 14px;
+  border-radius: 12px;
+  background: var(--ink);
+  color: var(--paper);
+  font-size: 13.5px;
+}
+.undo .link { color: var(--paper); }
+
+/* ---- editable shift rows ---- */
+.row-edit {
+  display: block;
+  width: 100%;
+  text-align: left;
+  border: 0;
+  background: none;
+  padding: 0;
+  font-weight: 500;
+  cursor: pointer;
+  border-radius: 8px;
+}
+.row-edit small { display: block; color: var(--ink-2); font-size: 12.5px; font-weight: 400; }
+.row .money .net.is-short { color: var(--gone); }
+.row .money .del { display: block; margin-left: auto; }
+
+.form-head h2 { margin: 0 0 2px; }
+
+/* ---- theme toggle ---- */
+.theme-btn {
+  width: 30px; height: 30px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: var(--card);
+  color: var(--ink-2);
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+}
+.theme-btn:hover { color: var(--ink); }
