@@ -48,13 +48,13 @@ export default function Site() {
           <h1>You earned ₹1,200 today. How much did you actually keep?</h1>
           <p className="lead">
             Asli Kamai logs each shift, takes out petrol, bike EMI and recharge, and shows the number that is really
-            yours — then explains, in plain words, where the rest went.
+            yours — then a coach explains, in Hindi or English, where the rest went and what to do about it.
           </p>
           <div className="cta">
             <a className="btn big" href={APP_URL}>Open the app</a>
             <a className="sample" href={SAMPLE_URL}>or see it with a sample week →</a>
           </div>
-          <p className="muted">Free. No sign-up. Works on any phone. Your numbers stay on your phone.</p>
+          <p className="muted">Free. No sign-up. Type it, say it, or show a screenshot. Your numbers stay on your phone.</p>
         </div>
 
         <div className="float">
@@ -111,12 +111,12 @@ export default function Site() {
           <div className="card lesson">
             <span className="tag">Fixed cost per day</span>
             <h3>What a loan costs you every morning</h3>
-            <p>₹3,000 EMI over 25 working days is ₹120 a day. A two-question quiz each week checks you can do it yourself.</p>
+            <p>₹3,799 of monthly costs over 25 working days is ₹152 a day. A two-question quiz each week checks you can work it out yourself.</p>
           </div>
           <div className="card lesson">
             <span className="tag">Compounding</span>
-            <h3>What ₹50 a day becomes</h3>
-            <p>Set a goal and see it grow — and what a recurring deposit adds on top. Your figures, not a textbook's.</p>
+            <h3>What ₹211 a day becomes</h3>
+            <p>Set a goal with a date and the app works out the daily amount from your own typical day — and what a recurring deposit adds on top.</p>
           </div>
         </div>
       </section>
@@ -131,7 +131,7 @@ export default function Site() {
         <ul className="promise-list">
           <li><b>Does not read your platform account.</b> No login to Swiggy or Zomato, ever.</li>
           <li><b>Does not guess how the app pays you.</b> Your record is the truth, not our estimate.</li>
-          <li><b>Does not send your numbers anywhere.</b> Only the week's totals go to the coach, never your name.</li>
+          <li><b>Does not send your numbers anywhere.</b> Only computed totals go to the coach, never your name — and the coach never does the arithmetic, so its rupees always match the app's.</li>
         </ul>
       </section>
 
@@ -163,16 +163,16 @@ export default function Site() {
 
 const STEPS = [
   {
-    title: 'Log a shift',
-    body: 'App, hours, what you earned, petrol you put in. Ten seconds after you park.',
+    title: 'Log a shift, your way',
+    body: 'Type it, say it in Hindi or English, or show a screenshot of the earnings screen. The app fills the form; you check and save.',
   },
   {
     title: 'Set your monthly costs once',
     body: 'Bike EMI, recharge, upkeep. Asli Kamai spreads them across your working days so every shift carries its share.',
   },
   {
-    title: 'See what you kept',
-    body: 'One number for the week, a bar for where the rest went, and a short explanation written from your data.',
+    title: 'See what you kept, then ask',
+    body: 'One number for the week, a bar for where the rest went, a lesson written from your data — and a coach that answers questions from your own record.',
   },
 ]
 

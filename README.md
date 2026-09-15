@@ -12,9 +12,14 @@ Asli Kamai is a financial-literacy coach for gig delivery and ride workers in In
 
 ## What it does
 
-- **One number per shift.** Platform, slot, hours, gross, petrol — ten seconds after you park.
+- **One number per shift, three ways in.** Type it; say it in Hindi, English or Hinglish ("Zomato shaam ko chaar ghante, gyarah sau kamaya, nabbe ka petrol"); or show a screenshot of the platform's earnings screen. A language model fills the form, the rider checks every field, and nothing is saved on the model's word.
 - **Kept this week.** Monthly costs (EMI, recharge, upkeep) are spread across your working days so every shift carries its share; the hero number is what is really yours.
-- **Explain my pay.** An LLM receives your week's *computed* facts — never raw access to anything — and writes a plain-language explanation plus one lesson (gross vs net, surge pricing, fixed cost per day, compounding), quoting your own figures. The model never does the arithmetic, so the rupees always match the app.
+- **Kept this week, by week.** Step back through past weeks, see each day as a bar, and see this week against last.
+- **Explain my pay.** An LLM receives the week's *computed* facts — never raw access to anything — and writes a plain-language explanation plus one lesson (gross vs net, surge pricing, fixed cost per day, cost per hour, week over week, a typical day), quoting the rider's own figures. The model never does the arithmetic, so the rupees always match the app.
+- **Ask the coach.** A conversation grounded in the same facts: "Which app pays me best per hour?", "Can I afford a ₹4,500 EMI?", "How many hours tomorrow evening to keep ₹800?" Every answer shows its working from the rider's own record.
+- **Weekly quiz.** Two questions on this week's numbers. The answers are computed by the app, the model only writes the question and the explanation, so a right answer is never marked wrong.
+- **Goal.** A phone, a helmet, Diwali at home: put a number and a date on it and the app works out the daily amount from the rider's typical day, how many hours of their best slot it takes, and what a recurring deposit would add on top.
+- **Hindi or English.** One tap switches the app's labels and every word the coach writes.
 - **Use first, sign in later.** The app is fully usable with no account; after ten shifts a Google sign-in keeps the record safe across phones. Data lives on the phone and syncs to the cloud once signed in.
 - **Installable.** Add to home screen on Android and it opens full-screen as an app.
 
@@ -29,7 +34,7 @@ Asli Kamai is a financial-literacy coach for gig delivery and ride workers in In
 - **Frontend:** React + Vite (TypeScript), two pages (`/` site, `/app/` PWA), no UI framework.
 - **API:** Vercel serverless functions in `api/`, thin handlers over the modules in `server/` (Google ID-token verification, JWT sessions, ledger sync, LLM call). `server/index.js` runs the same modules as an Express server for local dev.
 - **Database:** Postgres (`users`, `ledgers` — one JSON ledger per user).
-- **AI:** Featherless (`Qwen/Qwen3-30B-A3B-Instruct-2507`) behind the `/api/explain` function.
+- **AI:** Featherless — `Qwen/Qwen3-30B-A3B-Instruct-2507` for the explanation, coach, quiz and spoken entry; `Qwen/Qwen3-VL-30B-A3B-Instruct` reads earnings screenshots. Every AI route receives only figures computed in `server/facts.js`, and the routes are rate-limited per IP.
 
 ## Run it locally
 
@@ -43,4 +48,4 @@ npm run dev                          # site on :5173, app on :5173/app/
 
 ## Built for
 
-The Prometheus SPEED September AI Challenges (educational AI tools), September 2026.
+Riders in India, first. It started as a hackathon entry in an educational-AI series in September 2026.

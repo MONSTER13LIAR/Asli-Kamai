@@ -1,12 +1,12 @@
 import { useEffect, useRef, useState } from 'react'
 import { api } from './api'
 import { useAuth } from './auth'
-import { type Ledger, emptyLedger, seedLedger } from './model'
+import { type Goal, type Ledger, type Progress, emptyLedger, emptyProgress, seedLedger } from './model'
 
 const KEY = 'aslikamai.ledger.v1'
 const SAVED_KEY = 'aslikamai.ledger.savedAt'
 
-// /app/?sample=1 opens with the sample week, but never over a rider's own data.
+// /app/?sample=1 opens with the sample weeks, but never over a rider's own data.
 const wantsSample = () => {
   const url = new URL(window.location.href)
   if (!url.searchParams.has('sample')) return false
@@ -14,6 +14,13 @@ const wantsSample = () => {
   window.history.replaceState(null, '', url)
   return true
 }
+
+// Ledgers saved by earlier versions have no goal or progress; fill them in.
+const upgrade = (l: Ledger): Ledger => ({
+  ...l,
+  goal: l.goal ?? null,
+  progress: l.progress && Array.isArray(l.progress.concepts) ? l.progress : emptyProgress(),
+})
 
 const load = (): Ledger => {
   let saved: Ledger | null = null
@@ -25,7 +32,7 @@ const load = (): Ledger => {
   }
   if (saved && !Array.isArray(saved.shifts)) saved = null
   if (wantsSample() && !saved?.shifts.length) return seedLedger()
-  return saved ?? emptyLedger()
+  return saved ? upgrade(saved) : emptyLedger()
 }
 
 const savedAt = () => {
@@ -79,7 +86,7 @@ export function useLedger() {
         const localHasData = latest.current.shifts.length > 0
         const remoteNewer = remote && updatedAt && (!localHasData || updatedAt > savedAt())
         if (remoteNewer) {
-          setLedger(remote)
+          setLedger(upgrade(remote))
         } else if (localHasData) {
           await api.putLedger(latest.current)
         }
@@ -120,7 +127,15 @@ export function useLedger() {
 
   const loadSample = () => setLedger(seedLedger())
   const clearSample = () =>
-    setLedger((l) => ({ ...l, shifts: l.shifts.filter((s) => !s.sample) }))
+    setLedger((l) => ({ ...l, shifts: l.shifts.filter((s) => !s.sample), goal: null }))
   const clear = () => setLedger(emptyLedger())
-  return { ledger, setLedger, loadSample, clearSample, clear, sync }
+  const setGoal = (goal: Goal | null) => setLedger((l) => ({ ...l, goal }))
+  const updateProgress = (fn: (p: Progress) => Progress) =>
+    setLedger((l) => {
+      const next = fn(l.progress ?? emptyProgress())
+      const cur = l.progress ?? emptyProgress()
+      if (next.concepts.length === cur.concepts.length && next.quizzes.length === cur.quizzes.length) return l
+      return { ...l, progress: next }
+    })
+  return { ledger, setLedger, loadSample, clearSample, clear, setGoal, updateProgress, sync }
 }

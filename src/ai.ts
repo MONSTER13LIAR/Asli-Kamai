@@ -1,41 +1,54 @@
 import { useEffect, useState } from 'react'
-import { api } from './api'
+import { type Explanation, type Lang, api } from './api'
 import type { Ledger } from './model'
-
-export interface AiExplanation {
-  explanation: string
-  lesson: string
-  concept: string
-}
 
 type State =
   | { status: 'idle' | 'loading' }
-  | { status: 'ready'; data: AiExplanation }
+  | { status: 'ready'; data: Explanation }
   | { status: 'error'; message: string }
 
-const CACHE = 'aslikamai.explain.v1'
+const CACHE = 'aslikamai.explain.v2'
 
-// One call per distinct ledger; the answer is cached so re-renders and
-// reloads don't re-bill the same week.
-const keyFor = (ledger: Ledger) => JSON.stringify({ s: ledger.shifts.map((s) => [s.date, s.platform, s.slot, s.hours, s.gross, s.fuel]), m: ledger.monthly })
+// One call per distinct week; the answer is cached so re-renders, reloads and
+// flipping between weeks don't re-bill the same numbers.
+const keyFor = (ledger: Ledger, weekStart: string, lang: Lang) =>
+  JSON.stringify({
+    w: weekStart,
+    l: lang,
+    s: ledger.shifts.map((s) => [s.date, s.platform, s.slot, s.hours, s.gross, s.fuel]),
+    m: ledger.monthly,
+  })
 
-const readCache = (key: string): AiExplanation | null => {
+type Cache = Record<string, Explanation>
+const readCache = (): Cache => {
   try {
-    const raw = sessionStorage.getItem(CACHE)
-    const c = raw ? (JSON.parse(raw) as { key: string; data: AiExplanation }) : null
-    return c && c.key === key ? c.data : null
+    return JSON.parse(sessionStorage.getItem(CACHE) ?? '{}') as Cache
   } catch {
-    return null
+    return {}
+  }
+}
+const writeCache = (key: string, data: Explanation) => {
+  try {
+    const c = readCache()
+    const keys = Object.keys(c)
+    if (keys.length > 12) delete c[keys[0]]
+    c[key] = data
+    sessionStorage.setItem(CACHE, JSON.stringify(c))
+  } catch {
+    /* fine */
   }
 }
 
-export function useExplanation(ledger: Ledger): State {
-  const key = keyFor(ledger)
+export function useExplanation(ledger: Ledger, weekStart: string, lang: Lang, hasShifts: boolean, taught: string[]): State {
+  const key = keyFor(ledger, weekStart, lang)
   const [state, setState] = useState<State>({ status: 'idle' })
 
   useEffect(() => {
-    if (!ledger.shifts.length) return
-    const cached = readCache(key)
+    if (!hasShifts) {
+      setState({ status: 'idle' })
+      return
+    }
+    const cached = readCache()[key]
     if (cached) {
       setState({ status: 'ready', data: cached })
       return
@@ -47,14 +60,10 @@ export function useExplanation(ledger: Ledger): State {
     // slow, billable request per keystroke-sized change.
     const timer = setTimeout(() => {
       api
-        .explain(ledger)
+        .explain(ledger, { weekStart, lang, taught })
         .then((data) => {
           if (!live) return
-          try {
-            sessionStorage.setItem(CACHE, JSON.stringify({ key, data }))
-          } catch {
-            /* fine */
-          }
+          writeCache(key, data)
           setState({ status: 'ready', data })
         })
         .catch((e: Error) => live && setState({ status: 'error', message: e.message }))
@@ -64,7 +73,7 @@ export function useExplanation(ledger: Ledger): State {
       clearTimeout(timer)
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [key])
+  }, [key, hasShifts])
 
   return state
 }
