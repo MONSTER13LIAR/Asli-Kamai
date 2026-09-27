@@ -44,6 +44,10 @@ Asli Kamai is a financial-literacy coach for gig delivery and ride workers in In
 - **What the model never does.** Every rupee figure, per-hour rate, average and quiz answer is computed in plain code in `server/facts.js`. The model only receives those finished figures and puts them into words, so it cannot invent a number. It never sees an account, a login or any data beyond the rider's own week.
 - **Provider.** Both models are served through Featherless. Calls go through the server, the key never reaches the browser, and every AI route is rate-limited per IP.
 
+### AI in how it was built
+
+I built Asli Kamai with an AI coding assistant. I chose the problem, the features, the design and every trade-off, and I reviewed and tested each change on the live site before it shipped. The assistant helped write and debug code and draft parts of this documentation. I can walk through any part of the code and explain why it works the way it does.
+
 ## Credits
 
 - [React](https://react.dev) and [Vite](https://vite.dev) for the frontend, [TypeScript](https://www.typescriptlang.org).
