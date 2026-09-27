@@ -36,6 +36,21 @@ Asli Kamai is a financial-literacy coach for gig delivery and ride workers in In
 - **Database:** Postgres (`users`, `ledgers` — one JSON ledger per user).
 - **AI:** Featherless — `Qwen/Qwen3-30B-A3B-Instruct-2507` for the explanation, coach, quiz and spoken entry; `Qwen/Qwen3-VL-30B-A3B-Instruct` reads earnings screenshots. Every AI route receives only figures computed in `server/facts.js`, and the routes are rate-limited per IP.
 
+## How AI is used in the app
+
+- **Screenshot reading.** `Qwen/Qwen3-VL-30B-A3B-Instruct` reads an earnings screenshot and fills the shift form. The rider checks every field before it is saved.
+- **Spoken entry.** The browser turns speech into text (Web Speech API); `Qwen/Qwen3-30B-A3B-Instruct-2507` turns that text into the same form fields.
+- **Explanation, coach and quiz.** The same model writes the plain-language explanation, the coach's answers and the quiz wording.
+- **What the model never does.** Every rupee figure, per-hour rate, average and quiz answer is computed in plain code in `server/facts.js`. The model only receives those finished figures and puts them into words, so it cannot invent a number. It never sees an account, a login or any data beyond the rider's own week.
+- **Provider.** Both models are served through Featherless. Calls go through the server, the key never reaches the browser, and every AI route is rate-limited per IP.
+
+## Credits
+
+- [React](https://react.dev) and [Vite](https://vite.dev) for the frontend, [TypeScript](https://www.typescriptlang.org).
+- [node-postgres](https://node-postgres.com) for the database, [google-auth-library](https://github.com/googleapis/google-auth-library-nodejs) and [@react-oauth/google](https://github.com/MomenSherif/react-oauth) for Google sign-in, [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) for sessions.
+- [Qwen3](https://github.com/QwenLM/Qwen3) and [Qwen3-VL](https://github.com/QwenLM/Qwen3-VL) models by the Qwen team, served by [Featherless](https://featherless.ai).
+- Hosting on [Vercel](https://vercel.com); Postgres on [Render](https://render.com).
+
 ## Run it locally
 
 ```bash
