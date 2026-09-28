@@ -110,13 +110,14 @@ export default function Site() {
         <div className="promise-copy">
           <h2>What Asli Kamai does not do</h2>
           <p className="lead">
-            Everything comes from what you type in — your own ground-truth record, saved on your phone only.
+            Everything comes from what you type in — your own ground-truth record, saved on your phone only.<Mark />
           </p>
+          <p className="promise-note"><span className="mark">!</span> Once you sign in, your record is also synced to your account, so it survives a new phone.</p>
         </div>
         <ul className="promise-list">
           <li><b>Does not read your platform account.</b> No login to Swiggy or Zomato, ever.</li>
           <li><b>Does not guess how the app pays you.</b> Your record is the truth, not our estimate.</li>
-          <li><b>Does not send your numbers anywhere.</b> Only computed totals go to the coach, never your name — and the coach never does the arithmetic, so its rupees always match the app's.</li>
+          <li><b>Does not send your numbers anywhere.<Mark /></b> Only computed totals go to the coach, never your name — and the coach never does the arithmetic, so its rupees always match the app's.</li>
         </ul>
       </section>
 
@@ -265,4 +266,9 @@ function HowItWorks() {
       </div>
     </section>
   )
+}
+
+// Points a claim at the sign-in note under the promise heading.
+function Mark() {
+  return <span className="mark" aria-label="see note">!</span>
 }

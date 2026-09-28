@@ -43,6 +43,17 @@ export default function Developer() {
         <img className="dev-art" src="/mascot-riding.webp" alt="The Asli Kamai rider on a yellow scooter" loading="lazy" />
       </section>
 
+      <section className="dev-block dev-why">
+        <h2>Why I built this</h2>
+        <p>
+          A gig worker sees the payout on every app they ride for, but they know the harsh truth. They are not dumb.
+          They know they are not really earning that much, and when anyone asks their salary, they know they have to
+          fake the number. Their home runs on money they can't even track. They get ₹500, but what did the petrol cost?
+          They never get to keep track of it.
+        </p>
+        <p>They should have that right, and it is a shame for all of us that they don't. That's why I built Asli Kamai.</p>
+      </section>
+
       <section className="dev-block">
         <h2>How it is built</h2>
         <dl className="dev-built">
