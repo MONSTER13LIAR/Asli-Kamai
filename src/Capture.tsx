@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { type ParsedEntry, api } from './api'
 import { useLang } from './lang'
 import { isoDay } from './model'
+import Loader from './Loader'
 
 // Entry without typing. The rider says the shift out loud or shows the
 // earnings screen of the platform app; the model fills the form and the
@@ -166,6 +167,7 @@ export function Capture({ mode, onParsed, onClose }: { mode: Mode; onParsed: (e:
             </label>
           </>
         )}
+        {busy && <Loader kind="boy" label={c('reading')} />}
         {error && <p className="muted err">{error}</p>}
       </div>
     </div>

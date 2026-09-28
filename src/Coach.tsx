@@ -2,6 +2,7 @@ import { useEffect, useRef, useState } from 'react'
 import { type ChatMessage, type Lang, api } from './api'
 import { useLang } from './lang'
 import type { Ledger } from './model'
+import Loader from './Loader'
 
 // A conversation with the coach. The model only ever sees the computed facts
 // for the ledger, so every answer is grounded in the rider's own record; the
@@ -86,7 +87,7 @@ export function Coach({ ledger, weekStart, seed, onSeedUsed }: { ledger: Ledger;
             {m.content}
           </div>
         ))}
-        {busy && <div className="msg bot thinking">{t('thinking')}</div>}
+        {busy && <div className="msg bot thinking"><Loader kind="boy" label={t('thinking')} /></div>}
         {error && <p className="muted err">{t('coachOffline')}</p>}
         <div ref={end} />
       </div>

@@ -3,6 +3,7 @@ import { type Quiz, api } from './api'
 import { CONCEPTS } from './concepts'
 import { useLang } from './lang'
 import { type Ledger, type Progress, formatDate, progressOf } from './model'
+import Loader from './Loader'
 
 // The Learn tab: what the coach has taught so far, and a two-question quiz
 // on this week's own numbers. The answers are computed on the server; the
@@ -84,6 +85,7 @@ function QuizFlow({ ledger, weekStart, done, onDone }: { ledger: Ledger; weekSta
             {done.score}/{done.total}
           </p>
         )}
+        {loading && <Loader kind="scooter" label={t('loadingQuiz')} />}
         <button className="btn" onClick={start} disabled={loading}>
           {loading ? t('loadingQuiz') : done ? t('again') : t('startQuiz')}
         </button>

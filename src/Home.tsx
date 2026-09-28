@@ -12,6 +12,7 @@ import {
 } from './model'
 import { CostsForm, ShiftForm, slotName } from './ShiftForm'
 import type { SyncState } from './store'
+import Loader from './Loader'
 
 interface Props {
   ledger: Ledger
@@ -239,7 +240,7 @@ export function Home({ ledger, setLedger, weekStart, setWeekStart, updateProgres
               {lines.map((l, i) => (
                 <p key={i}>{l}</p>
               ))}
-              {ai.status === 'loading' && <p className="muted">{t('writingLesson')}</p>}
+              {ai.status === 'loading' && <Loader kind="riding" label={t('writingLesson')} />}
               {ai.status === 'error' && <p className="muted">{t('coachOffline')}</p>}
             </>
           )}
