@@ -303,7 +303,11 @@
 .promise-list li:first-child { border-top: 0; padding-top: 0; }
 .promise-list li:last-child { padding-bottom: 0; }
 .promise-list b { display: block; font-size: 20px; opacity: 1; color: var(--paper); margin-bottom: 2px; }
-[data-theme='dark'] .promise { background: var(--card); border: 1px solid var(--line); }
+/* dark mode: --paper turns dark, so the band switches to a card with ink text */
+[data-theme='dark'] .promise { background: var(--card); color: var(--ink); border: 1px solid var(--line); }
+[data-theme='dark'] .promise .lead { color: var(--ink-2); opacity: 1; }
+[data-theme='dark'] .promise-list li { color: var(--ink-2); opacity: 1; border-top-color: var(--line); }
+[data-theme='dark'] .promise-list b { color: var(--ink); }
 
 /* closing call to action */
 .final {

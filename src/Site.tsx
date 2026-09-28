@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react'
-import { useTheme } from './theme'
+import { ThemeSwitch, useTheme } from './theme'
 
 const APP_URL = '/app/'
 const SAMPLE_URL = '/app/?sample=1'
@@ -21,24 +21,9 @@ export default function Site() {
         <nav>
           <a href="#how">How it works</a>
           <a href="#learn">What you learn</a>
+          <a href="/developer/">Developer</a>
           <a className="btn small" href={APP_URL}>Open the app</a>
-          <button
-            type="button"
-            className="switch"
-            role="switch"
-            aria-checked={theme === 'dark'}
-            aria-label="Dark mode"
-            onClick={toggle}
-          >
-            <svg className="sun" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round">
-              <circle cx="12" cy="12" r="4" fill="currentColor" />
-              <path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4" />
-            </svg>
-            <svg className="moon" viewBox="0 0 24 24" fill="currentColor">
-              <path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8z" />
-            </svg>
-            <span className="knob" />
-          </button>
+          <ThemeSwitch theme={theme} toggle={toggle} />
         </nav>
       </header>
 
@@ -153,6 +138,7 @@ export default function Site() {
           <a href="#how">How it works</a>
           <a href="#learn">What you learn</a>
           <a href={APP_URL}>Open the app</a>
+          <a href="/developer/">Developer</a>
           <a href="https://github.com/MONSTER13LIAR/Asli-Kamai">Source</a>
         </nav>
         <span className="muted">Built for riders in India.</span>
