@@ -10,6 +10,23 @@ Asli Kamai is a financial-literacy coach for gig delivery and ride workers in In
 | --- | --- |
 | ![Landing page](screenshots/site.png) | ![The app with a sample week](screenshots/app.png) |
 
+## How it works
+
+```mermaid
+flowchart LR
+  A["Log a shift<br/>type · say it · photo"] --> B["Rider checks<br/>every field, saves"]
+  B --> C["Plain code computes<br/>kept, per hour, trends"]
+  C --> D["Only the computed<br/>figures go to the model"]
+  D --> E["Qwen3 puts them<br/>into words"]
+  E --> F["Explanation, coach, quiz<br/>in Hindi or English"]
+```
+
+1. **Log a shift.** Type it, say it, or show a screenshot of the earnings screen. The model fills the form; the rider checks every field before anything is saved.
+2. **Set monthly costs once.** Bike EMI, recharge and upkeep are spread across working days, so every shift carries its share.
+3. **The app does the maths.** What was kept, per hour, by time of day, week against week. All of it is plain code, never the model.
+4. **The model only explains.** It receives the finished figures and writes the explanation, the coach's answers and the weekly quiz, so its rupees always match the app's.
+5. **The record stays with the rider.** It lives on the phone. After ten shifts a Google sign-in backs it up to the rider's account so it survives a new phone.
+
 ## What it does
 
 - **One number per shift, three ways in.** Type it; say it in Hindi, English or Hinglish ("Zomato shaam ko chaar ghante, gyarah sau kamaya, nabbe ka petrol"); or show a screenshot of the platform's earnings screen. A language model fills the form, the rider checks every field, and nothing is saved on the model's word.
