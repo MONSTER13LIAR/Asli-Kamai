@@ -53,7 +53,7 @@ I built Asli Kamai with an AI coding assistant. I chose the problem, the feature
 - [React](https://react.dev) and [Vite](https://vite.dev) for the frontend, [TypeScript](https://www.typescriptlang.org).
 - [node-postgres](https://node-postgres.com) for the database, [google-auth-library](https://github.com/googleapis/google-auth-library-nodejs) and [@react-oauth/google](https://github.com/MomenSherif/react-oauth) for Google sign-in, [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) for sessions.
 - [Qwen3](https://github.com/QwenLM/Qwen3) and [Qwen3-VL](https://github.com/QwenLM/Qwen3-VL) models by the Qwen team, served by [Featherless](https://featherless.ai).
-- Hosting on [Vercel](https://vercel.com); Postgres on [Render](https://render.com).
+- Hosting on [Vercel](https://vercel.com); Postgres on [Neon](https://neon.com).
 
 ## Run it locally
 
