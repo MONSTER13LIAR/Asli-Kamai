@@ -117,6 +117,9 @@ function SignInWall({ count }: { count: number }) {
         <GoogleButton onError={setError} />
         {error && <p className="muted">{error}</p>}
         <p className="muted">Only your Google name and email are stored. Nothing is shared with any platform.</p>
+        <p className="muted">
+          By continuing you agree to the <a href="/terms/">Terms</a> and <a href="/privacy/">Privacy Policy</a>.
+        </p>
       </div>
     </div>
   )

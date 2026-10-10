@@ -328,6 +328,9 @@ export function Home({ ledger, setLedger, weekStart, setWeekStart, updateProgres
           <button onClick={loadSample}>{t('loadSample')}</button>
         )}
       </p>
+      <p className="foot legal-links">
+        <a href="/privacy/">{lang === 'hi' ? 'गोपनीयता नीति' : 'Privacy'}</a> · <a href="/terms/">{lang === 'hi' ? 'शर्तें' : 'Terms'}</a>
+      </p>
     </>
   )
 }

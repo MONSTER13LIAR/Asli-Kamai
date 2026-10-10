@@ -85,6 +85,8 @@ export default function Developer() {
           <a href="/">Home</a>
           <a href="/app/">Open the app</a>
           <a href="https://github.com/MONSTER13LIAR/Asli-Kamai">Source</a>
+          <a href="/privacy/">Privacy</a>
+          <a href="/terms/">Terms</a>
         </nav>
         <span className="muted">Built for riders in India.</span>
       </footer>

@@ -347,10 +347,10 @@
   border-top: 1px solid var(--line);
   font-size: 17px;
 }
-.site-foot .brand { font-size: 30px; }
+.site-foot .brand { font-size: 30px; white-space: nowrap; }
 .site-foot .muted { font-size: 16px; }
-.site-foot nav { display: flex; gap: 28px; }
-.site-foot nav a { color: var(--ink-2); text-decoration: none; }
+.site-foot nav { display: flex; gap: 22px; }
+.site-foot nav a { color: var(--ink-2); text-decoration: none; white-space: nowrap; }
 .site-foot nav a:hover { color: var(--ink); }
 
 
